@@ -1,0 +1,6 @@
+dbs:
+  - path: ${DB_PATH}
+    replicas:
+      - url: ${REPLICA_URL}
+        retention: 24h
+        snapshot-interval: 1h
