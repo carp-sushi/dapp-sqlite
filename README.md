@@ -36,7 +36,7 @@ iex -S mix
 ### Get Roles (admin)
 
 ```shell
-curl -is -XGET -H "x-account-address: tp18vd8fpwxzck93qlwghaj6arh4p7c5n89x8kska" http://localhost:8081/dapp/api/v1/roles
+curl -is -XGET -H "x-account-address: tp18vd8fpwxzck93qlwghaj6arh4p7c5n89x8kska" http://localhost:8082/dapp/api/v1/roles
 ```
 
 Note the `role_id` for "User" for creating invite below.
@@ -48,7 +48,7 @@ curl -is -XPOST \
   -H "x-account-address: tp18vd8fpwxzck93qlwghaj6arh4p7c5n89x8kska" \
   -H "content-type: application/json" \
   -d '{"email": "jon@duck.com", "role_id": 2}' \
-  http://localhost:8081/dapp/api/v1/invites
+  http://localhost:8082/dapp/api/v1/invites
 ```
 
 Copy the invite code from the response for the next step.
@@ -63,7 +63,7 @@ curl -is -XPOST \
   -H "x-account-address: tp18vd8fpwxzck93qlwghaj6arh4p7c5n89x8kjon" \
   -H "content-type: application/json" \
   -d '{"name": "Jon Doe", "email": "jon@duck.com", "invite_code": "FIXME"}' \
-  http://localhost:8081/dapp/api/v1/signup
+  http://localhost:8082/dapp/api/v1/signup
 ```
 
 ### Get Profile (user)
@@ -71,7 +71,7 @@ curl -is -XPOST \
 The new user should be able to access their profile.
 
 ```shell
-curl -is -XGET -H "x-account-address: tp18vd8fpwxzck93qlwghaj6arh4p7c5n89x8kjon" http://localhost:8081/dapp/api/v1/users/profile
+curl -is -XGET -H "x-account-address: tp18vd8fpwxzck93qlwghaj6arh4p7c5n89x8kjon" http://localhost:8082/dapp/api/v1/users/profile
 ```
 
 ## Replication

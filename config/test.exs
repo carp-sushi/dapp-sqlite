@@ -4,7 +4,7 @@ import Config
 # Run `mix help test` for more information.
 config :dapp, Dapp.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
-  database: "tmp/dapp_test#{System.get_env("MIX_TEST_PARTITION")}.db",
+  database: "tmp/data/test#{System.get_env("MIX_TEST_PARTITION")}.db",
   default_transaction_mode: :immediate,
   busy_timeout: 5000,
   wal_auto_check_point: 0
