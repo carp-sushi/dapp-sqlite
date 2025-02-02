@@ -5,19 +5,19 @@ defmodule Dapp.Data.Repo.RoleRepoTest do
   # Repo being tested
   alias Dapp.Data.Repo.RoleRepo
 
-  # Set up SQL sandbox.
+  # Set up SQL sandbox and insert a random number of roles.
   setup do
     :ok = Sandbox.checkout(Dapp.Repo)
+    size = :rand.uniform(5)
+    FakeData.generate_roles(size) |> Enum.each(&Dapp.Repo.insert!/1)
+    %{expect: %{size: size}}
   end
 
   # Test that repo can query roles from the db.
   describe "RoleRepo" do
-    # @tag :skip
-    test "should return all stored roles" do
-      size = :rand.uniform(5)
-      FakeData.generate_roles(size) |> Enum.each(&Dapp.Repo.insert!/1)
+    test "should return all stored roles", ctx do
       roles = RoleRepo.all()
-      assert length(roles) == size
+      assert length(roles) == ctx.expect.size
     end
   end
 end

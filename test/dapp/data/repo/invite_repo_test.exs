@@ -25,7 +25,7 @@ defmodule Dapp.Data.Repo.InviteRepoTest do
 
   # Create user helper.
   defp create_user do
-    role = Repo.insert!(FakeData.generate_role())
+    role = FakeData.generate_role() |> Repo.insert!()
     address = FakeData.generate_blockchain_address()
     email = FakeData.generate_email_addresss()
     {:ok, user} = UserRepo.create(%{blockchain_address: address, email: email, role_id: role.id})
@@ -34,8 +34,7 @@ defmodule Dapp.Data.Repo.InviteRepoTest do
 
   # Test signup repo
   describe "InviteRepo" do
-    # @tag :skip
-    test "should enable user signups via invite given valid params", ctx do
+    test "should enable user signups via invite", ctx do
       # Test invite creation by admin step
       assert {:ok, created} = InviteRepo.create(ctx.params)
       assert created.user_id == ctx.admin.id
@@ -56,13 +55,11 @@ defmodule Dapp.Data.Repo.InviteRepoTest do
       assert error.message == "invite does not exist or has already been consumed"
     end
 
-    # @tag :skip
     test "should fail to create an invite given empty params" do
       assert {:error, error} = InviteRepo.create(%{})
       assert error.message == "failed to create invite"
     end
 
-    # @tag :skip
     test "should fail looking up an invite that does not exist" do
       assert {:error, error} = InviteRepo.lookup(Nanoid.generate(), FakeData.generate_email_addresss())
       assert error.message == "invite does not exist or has already been consumed"
