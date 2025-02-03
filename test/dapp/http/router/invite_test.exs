@@ -18,15 +18,15 @@ defmodule Dapp.Http.Router.InviteTest do
       admin = UserUtil.mock_http_admin()
       body = %{email: FakeData.generate_email_addresss(), role_id: FakeData.generate_role().id}
       req = conn(:post, "/", body) |> put_req_header(@auth_header, admin.blockchain_address)
-      rep = InviteRouter.call(req, [])
-      assert rep.status == 201
+      res = InviteRouter.call(req, [])
+      assert res.status == 201
     end
 
     test "should fail when no data is passed in the request body" do
       admin = UserUtil.mock_http_admin()
       req = conn(:post, "/") |> put_req_header(@auth_header, admin.blockchain_address)
-      rep = InviteRouter.call(req, [])
-      assert rep.status == 400
+      res = InviteRouter.call(req, [])
+      assert res.status == 400
     end
   end
 

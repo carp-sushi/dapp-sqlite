@@ -18,14 +18,14 @@ defmodule Dapp.Http.Router.SignupTest do
       InviteUtil.mock_signup()
       body = %{invite_code: invite.id, email: invite.email}
       req = conn(:post, "/", body) |> put_req_header(@auth_header, FakeData.generate_blockchain_address())
-      rep = SignupRouter.call(req, [])
-      assert rep.status == 201
+      res = SignupRouter.call(req, [])
+      assert res.status == 201
     end
 
     test "fails when no request body is sent" do
       req = conn(:post, "/") |> put_req_header(@auth_header, FakeData.generate_blockchain_address())
-      rep = SignupRouter.call(req, [])
-      assert rep.status == 400
+      res = SignupRouter.call(req, [])
+      assert res.status == 400
     end
   end
 

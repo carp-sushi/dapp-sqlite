@@ -17,8 +17,8 @@ defmodule Dapp.Http.Router.RoleTest do
       RoleUtil.mock_list_roles(2)
       admin = UserUtil.mock_http_admin()
       req = conn(:get, "/") |> put_req_header(@auth_header, admin.blockchain_address)
-      rep = RoleRouter.call(req, [])
-      assert rep.status == 200
+      res = RoleRouter.call(req, [])
+      assert res.status == 200
     end
   end
 

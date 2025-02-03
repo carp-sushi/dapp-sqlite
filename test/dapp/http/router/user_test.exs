@@ -17,15 +17,15 @@ defmodule Dapp.Http.Router.UserTest do
       UserUtil.mock_list_users(1)
       admin = UserUtil.mock_http_admin()
       req = conn(:get, "/recent") |> put_req_header(@auth_header, admin.blockchain_address)
-      rep = UserRouter.call(req, [])
-      assert rep.status == 200
+      res = UserRouter.call(req, [])
+      assert res.status == 200
     end
 
     test "prevents non-admins from listing recent users" do
       user = UserUtil.mock_http_user()
       req = conn(:get, "/recent") |> put_req_header(@auth_header, user.blockchain_address)
-      rep = UserRouter.call(req, [])
-      assert rep.status == 401
+      res = UserRouter.call(req, [])
+      assert res.status == 401
     end
   end
 
@@ -33,8 +33,8 @@ defmodule Dapp.Http.Router.UserTest do
     test "returns the profile for an authorized user" do
       user = UserUtil.mock_http_user()
       req = conn(:get, "/profile") |> put_req_header(@auth_header, user.blockchain_address)
-      rep = UserRouter.call(req, [])
-      assert rep.status == 200
+      res = UserRouter.call(req, [])
+      assert res.status == 200
     end
   end
 
