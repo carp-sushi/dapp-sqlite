@@ -14,6 +14,5 @@ if config_env() == :prod do
     database: db_path,
     pool_size: String.to_integer(db_pool_size),
     default_transaction_mode: :immediate,
-    busy_timeout: 5000,
-    wal_auto_check_point: 0
+    busy_timeout: 5000
 end
