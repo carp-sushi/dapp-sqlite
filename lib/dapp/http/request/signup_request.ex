@@ -17,7 +17,7 @@ defmodule Dapp.Http.Request.SignupRequest do
       {args, types}
       |> Changeset.cast(conn.body_params, keys)
       |> validate_required([:invite_code, :email])
-      |> validate_length(:invite_code, max: 21)
+      |> validate_length(:invite_code, max: Nanoid.Configuration.default_size())
       |> validate_length(:name, max: 255)
       |> validate_length(:email, min: 3, max: 255)
 

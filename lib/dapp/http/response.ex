@@ -10,25 +10,39 @@ defmodule Dapp.Http.Response do
     @pretty false
   end
 
-  @doc "Send a bad request response."
+  @doc """
+  Send a bad request response.
+  """
   def bad_request(conn, error),
-    do: send_json(conn, %{error: error}, 400)
+    do: conn |> send_json(%{error: error}, 400)
 
-  @doc "Not found error helper."
+  @doc """
+  Send a not found response.
+  """
   def not_found(conn) do
-    send_json(conn, %{error: %{message: "route not found"}}, 404)
+    conn
+    |> send_json(%{error: %{message: "route not found"}}, 404)
     |> halt
   end
 
-  @doc "Unauthorized request error helper."
+  @doc """
+  Send an unauthorized response.
+  """
   def unauthorized(conn) do
-    send_json(conn, %{error: %{message: "unauthorized"}}, 401)
+    conn
+    |> send_json(%{error: %{message: "unauthorized"}}, 401)
     |> halt
   end
 
-  @doc "Encode data to JSON and send as a HTTP response."
+  @doc """
+  Encode data as JSON and send in a HTTP response with a status.
+  """
   def send_json(conn, data, status \\ 200) do
-    put_resp_content_type(conn, "application/json")
-    |> send_resp(status, Jason.encode!(data, pretty: @pretty))
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(
+      status,
+      Jason.encode!(data, pretty: @pretty)
+    )
   end
 end
