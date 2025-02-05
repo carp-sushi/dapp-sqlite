@@ -14,11 +14,18 @@ defmodule Dapp.Http.Router.RoleTest do
 
   describe "GET /roles" do
     test "allows admins to list roles" do
-      RoleUtil.mock_list_roles(2)
+      RoleUtil.mock_list_roles(:rand.uniform(5))
       admin = UserUtil.mock_http_admin()
       req = conn(:get, "/") |> put_req_header(@auth_header, admin.blockchain_address)
       res = RoleRouter.call(req, [])
       assert res.status == 200
+    end
+
+    test "prevents users from listing roles" do
+      user = UserUtil.mock_http_user()
+      req = conn(:get, "/") |> put_req_header(@auth_header, user.blockchain_address)
+      res = RoleRouter.call(req, [])
+      assert res.status == 401
     end
   end
 

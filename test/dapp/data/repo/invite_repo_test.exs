@@ -64,5 +64,11 @@ defmodule Dapp.Data.Repo.InviteRepoTest do
       assert {:error, error} = InviteRepo.lookup(Nanoid.generate(), FakeData.generate_email_addresss())
       assert error.message == "invite does not exist or has already been consumed"
     end
+
+    test "should fail signup given empty params", ctx do
+      assert {:ok, invite} = InviteRepo.create(ctx.params)
+      assert {:error, error} = InviteRepo.signup(%{}, invite)
+      assert error.message == "signup failure"
+    end
   end
 end

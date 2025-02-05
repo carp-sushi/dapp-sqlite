@@ -37,5 +37,10 @@ defmodule Dapp.Data.Repo.UserRepoTest do
     test "should handle nil blockchain address on get" do
       assert is_nil(UserRepo.get_by_address(nil))
     end
+
+    test "should fail to create user given empty params" do
+      assert {:error, error} = UserRepo.create(%{})
+      assert error.message == "failed to create user"
+    end
   end
 end

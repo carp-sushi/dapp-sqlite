@@ -1,11 +1,7 @@
 # Example .envrc file for:
-
-# App / Testing
 export NETWORK_PREFIX=tp
 export MIX_TEST_PARTITION="_2025_1"
-
-# Replication
-export DB_PATH="tmp/dapp_dev.db"
+export DB_PATH="tmp/data/dev.db"
 export REPLICA_URL="s3://dapp.localhost:9000/dev"
 export LITESTREAM_ACCESS_KEY_ID=minioadmin
 export LITESTREAM_SECRET_ACCESS_KEY=minioadmin

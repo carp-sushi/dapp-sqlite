@@ -29,9 +29,14 @@ defmodule Dapp.UseCase.Invite.SignupTest do
       assert {:error, %{message: "invite not found"}} = Signup.execute(args)
     end
 
-    test "should fail to create a new user with invalid params", ctx do
+    test "should fail to create a new user with invalid args", ctx do
       args = %{invite_code: ctx.args.invite_code, email: ctx.args.email}
       assert {:error, %{message: "invalid user params"}} = Signup.execute(args)
+    end
+
+    test "should fail to create a new user with empty args" do
+      assert {:error, error} = Signup.execute(%{})
+      assert error.message == "missing required args: [:invite_code, :email]"
     end
   end
 end

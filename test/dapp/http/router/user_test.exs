@@ -14,14 +14,14 @@ defmodule Dapp.Http.Router.UserTest do
 
   describe "GET /users/recent" do
     test "allows admins to list recent users" do
-      UserUtil.mock_list_users(1)
+      UserUtil.mock_list_users(2)
       admin = UserUtil.mock_http_admin()
       req = conn(:get, "/recent") |> put_req_header(@auth_header, admin.blockchain_address)
       res = UserRouter.call(req, [])
       assert res.status == 200
     end
 
-    test "prevents non-admins from listing recent users" do
+    test "prevents users from listing recent users" do
       user = UserUtil.mock_http_user()
       req = conn(:get, "/recent") |> put_req_header(@auth_header, user.blockchain_address)
       res = UserRouter.call(req, [])
