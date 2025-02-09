@@ -12,7 +12,9 @@ defmodule Dapp.Data.Repo.UserRepo do
   # Sets a maximum on query result size.
   @max_records Application.compile_env(:dapp, :max_records)
 
-  @doc "Create a user."
+  @doc """
+  Create a user.
+  """
   def create(params) do
     %User{}
     |> User.changeset(params)
@@ -23,7 +25,9 @@ defmodule Dapp.Data.Repo.UserRepo do
     end
   end
 
-  @doc "Query for the user with the given blockchain address."
+  @doc """
+  Query for the user with the given blockchain address.
+  """
   def get_by_address(blockchain_address) do
     unless is_nil(blockchain_address) do
       Repo.get_by(User, blockchain_address: blockchain_address)
@@ -31,7 +35,9 @@ defmodule Dapp.Data.Repo.UserRepo do
     end
   end
 
-  @doc "Get recently created users"
+  @doc """
+  Get recently created users.
+  """
   def list_recent do
     Repo.all(
       from(u in User,

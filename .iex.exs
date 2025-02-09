@@ -40,21 +40,3 @@ IEx.configure(
     "#{IO.ANSI.green()}%prefix#{IO.ANSI.reset()}" <>
       "(#{IO.ANSI.cyan()}%counter#{IO.ANSI.reset()}) >"
 )
-
-# Helper function examples
-# defmodule IExHelpers do
-#   def reload! do
-#     Mix.Task.reenable("compile.elixir")
-#     Application.stop(Mix.Project.config()[:app])
-#     Mix.Task.run("compile.elixir")
-#     Application.start(Mix.Project.config()[:app])
-#   end
-
-#   def migrate! do
-#     path = Application.app_dir(:dapp, "priv/repo/migrations")
-#     Ecto.Migrator.run(Dapp.Repo, path, :up, all: true)
-#   end
-# end
-
-# Import helper functions into IEx session scope
-# import IExHelpers

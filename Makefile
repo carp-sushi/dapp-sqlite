@@ -1,5 +1,5 @@
 .PHONY: all
-all: format compile
+all: format compile quality
 
 .PHONY: format
 format:
@@ -11,6 +11,14 @@ compile:
 
 .PHONY: test
 test:
+	mix test --trace
+
+.PHONY: coverage
+coverage:
+	mix test --cover
+
+.PHONY: quality
+quality:
 	mix quality
 
 .PHONY: clean

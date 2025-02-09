@@ -11,7 +11,9 @@ defmodule Dapp.Data.Repo.InviteRepo do
   alias Ecto.Multi
   import Ecto.Query
 
-  @doc "Create an invite."
+  @doc """
+  Create an invite.
+  """
   def create(params) do
     %Invite{}
     |> Invite.changeset(params)
@@ -22,25 +24,25 @@ defmodule Dapp.Data.Repo.InviteRepo do
     end
   end
 
-  @doc "Look up an invite using id and email address."
+  @doc """
+  Look up an invite using id and email address.
+  """
   def lookup(id, email) do
-    case query_invite(id, email) do
-      nil -> Error.new("invite does not exist or has already been consumed")
-      invite -> {:ok, invite}
-    end
-  end
-
-  # Get invite helper
-  defp query_invite(id, email) do
     Repo.one(
       from(i in Invite,
         where: i.id == ^id and i.email == ^email and is_nil(i.consumed_at),
         select: i
       )
     )
+    |> case do
+      nil -> Error.new("invite does not exist or has already been consumed")
+      invite -> {:ok, invite}
+    end
   end
 
-  @doc "Create a user from an invite and mark the invite as consumed."
+  @doc """
+  Create a user from an invite and mark the invite as consumed.
+  """
   def signup(params, invite) do
     user_params = Map.put(params, :role_id, invite.role_id)
     user_changeset = %User{id: Nanoid.generate()} |> User.changeset(user_params)

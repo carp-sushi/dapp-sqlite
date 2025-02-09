@@ -19,7 +19,7 @@ defmodule Dapp.Data.Schema.Role do
     struct
     |> cast(params, [:name])
     |> validate_required([:name])
-    |> validate_length(:name, min: 1, max: 255)
+    |> validate_length(:name, max: 255)
     |> unique_constraint(:name)
   end
 
