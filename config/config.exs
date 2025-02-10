@@ -14,7 +14,7 @@ config :dapp,
 # Configure nanoid size, alphabet.
 config :nanoid,
   size: 21,
-  alphabet: "23456789abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ"
+  alphabet: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
 # Load environment specific configuration.
 import_config "#{config_env()}.exs"

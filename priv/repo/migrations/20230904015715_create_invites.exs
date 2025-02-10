@@ -6,7 +6,7 @@ defmodule Dapp.Repo.Migrations.CreateInvites do
       add :id, :string, size: 21, primary_key: true
       add :user_id, references(:users, type: :string), size: 21, null: false
       add :role_id, references(:roles), null: false
-      add :email, :string, null: false
+      add :email, :text, null: false
       add :consumed_at, :timestamp
       timestamps()
     end

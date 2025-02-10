@@ -3,7 +3,7 @@ defmodule Dapp.Repo.Migrations.CreateRoles do
 
   def change do
     create table(:roles) do
-      add :name, :string, null: false
+      add :name, :text, null: false
     end
     create unique_index(:roles, [:name])
   end
