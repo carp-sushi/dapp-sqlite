@@ -4,10 +4,11 @@ defmodule Dapp.UseCase.User.ListUsers do
   """
   alias Dapp.Dto
   use Dapp.Data.Keeper
+  use Dapp.UseCase
 
-  @behaviour Dapp.UseCase
+  @impl true
   def execute(_args) do
     users = user_repo().list_recent() |> Enum.map(&Dto.from_schema/1)
-    {:ok, %{users: users}}
+    %{users: users} |> success()
   end
 end

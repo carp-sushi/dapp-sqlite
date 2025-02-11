@@ -33,5 +33,10 @@ defmodule Dapp.UseCase.Invite.CreateInviteTest do
       args = Map.merge(ctx.args, %{email: "a@"})
       assert {:error, %{message: "invalid invite"}} = CreateInvite.execute(args)
     end
+
+    test "should fail to create a new invite given nil args" do
+      assert {:error, error} = CreateInvite.execute(nil)
+      assert error.message == "use case args must not be nil"
+    end
   end
 end

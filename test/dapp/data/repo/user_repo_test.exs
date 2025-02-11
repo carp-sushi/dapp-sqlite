@@ -1,6 +1,5 @@
 defmodule Dapp.Data.Repo.UserRepoTest do
   use ExUnit.Case
-  alias Dapp.Repo
   alias Ecto.Adapters.SQL.Sandbox
 
   # Repo being tested
@@ -11,17 +10,8 @@ defmodule Dapp.Data.Repo.UserRepoTest do
     # When using a sandbox, each test runs in an isolated, independent transaction
     # which is rolled back after test execution.
     :ok = Sandbox.checkout(Dapp.Repo)
-    address = FakeData.generate_blockchain_address()
-    assert {:ok, user} = create_user(address)
-    %{address: address, expect: %{user: user}}
-  end
-
-  # Create user helper.
-  defp create_user(address) do
-    role = FakeData.generate_role() |> Repo.insert!()
-    email = FakeData.generate_email_addresss()
-    params = %{blockchain_address: address, email: email, role_id: role.id}
-    UserRepo.create(params)
+    assert {:ok, user, _role} = UserUtil.persist_user()
+    %{address: user.blockchain_address, expect: %{user: user}}
   end
 
   # Test user repo

@@ -1,7 +1,5 @@
 defmodule Dapp.Data.Repo.InviteRepoTest do
   use ExUnit.Case
-  alias Dapp.Data.Repo.UserRepo
-  alias Dapp.Repo
   alias Ecto.Adapters.SQL.Sandbox
 
   # Repo being tested
@@ -10,34 +8,25 @@ defmodule Dapp.Data.Repo.InviteRepoTest do
   # Setup test context
   setup do
     :ok = Sandbox.checkout(Dapp.Repo)
-    {:ok, admin, role} = create_user()
+    {:ok, user, role} = UserUtil.persist_user()
 
     %{
-      admin: admin,
+      user: user,
       role: role,
       params: %{
         email: FakeData.generate_email_addresss(),
-        user_id: admin.id,
+        user_id: user.id,
         role_id: role.id
       }
     }
   end
 
-  # Create user helper.
-  defp create_user do
-    role = FakeData.generate_role() |> Repo.insert!()
-    address = FakeData.generate_blockchain_address()
-    email = FakeData.generate_email_addresss()
-    {:ok, user} = UserRepo.create(%{blockchain_address: address, email: email, role_id: role.id})
-    {:ok, user, role}
-  end
-
   # Test signup repo
   describe "InviteRepo" do
     test "should enable user signups via invite", ctx do
-      # Test invite creation by admin step
+      # Test invite creation step
       assert {:ok, created} = InviteRepo.create(ctx.params)
-      assert created.user_id == ctx.admin.id
+      assert created.user_id == ctx.user.id
       assert created.role_id == ctx.role.id
 
       # Test lookup step

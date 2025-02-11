@@ -8,9 +8,8 @@ defmodule Dapp.Data.Repo.RoleRepoTest do
   # Set up SQL sandbox and insert a random number of roles.
   setup do
     :ok = Sandbox.checkout(Dapp.Repo)
-    size = :rand.uniform(5)
-    FakeData.generate_roles(size) |> Enum.each(&Dapp.Repo.insert!/1)
-    %{expect: %{size: size}}
+    roles = FakeData.generate_roles(:rand.uniform(5)) |> Enum.map(fn role -> RoleUtil.persist_role(role.name) end)
+    %{expect: %{size: length(roles)}}
   end
 
   # Test that repo can query roles from the db.
