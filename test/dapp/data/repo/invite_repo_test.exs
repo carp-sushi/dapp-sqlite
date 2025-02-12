@@ -9,14 +9,18 @@ defmodule Dapp.Data.Repo.InviteRepoTest do
   setup do
     :ok = Sandbox.checkout(Dapp.Repo)
     {:ok, user, role} = UserUtil.persist_user()
+    email = FakeData.generate_email_addresss()
 
     %{
-      user: user,
-      role: role,
       params: %{
-        email: FakeData.generate_email_addresss(),
+        email: email,
         user_id: user.id,
         role_id: role.id
+      },
+      expect: %{
+        user_id: user.id,
+        role_id: role.id,
+        email: email
       }
     }
   end
@@ -26,11 +30,13 @@ defmodule Dapp.Data.Repo.InviteRepoTest do
     test "should enable user signups via invite", ctx do
       # Test invite creation step
       assert {:ok, created} = InviteRepo.create(ctx.params)
-      assert created.user_id == ctx.user.id
-      assert created.role_id == ctx.role.id
+      assert created.user_id == ctx.expect.user_id
+      assert created.role_id == ctx.expect.role_id
+      assert created.email == ctx.expect.email
 
       # Test lookup step
-      assert {:ok, invite} = InviteRepo.lookup(created.id, ctx.params.email)
+      assert {:ok, invite} = InviteRepo.lookup(created.id, created.email)
+      assert invite.id == created.id
       assert invite.email == created.email
 
       # Test user signup step
@@ -38,6 +44,7 @@ defmodule Dapp.Data.Repo.InviteRepoTest do
       user_params = %{blockchain_address: blockchain_address, email: ctx.params.email}
       assert {:ok, user} = InviteRepo.signup(user_params, invite)
       assert user.role_id == invite.role_id
+      assert user.email == invite.email
 
       # Ensure invite has been consumed
       assert {:error, error} = InviteRepo.lookup(created.id, ctx.params.email)
