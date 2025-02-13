@@ -1,8 +1,7 @@
-defmodule Mix.Tasks.Migrate do
+defmodule Dapp.Migrator do
   @moduledoc """
-  A custom mix task that runs ecto migrations.
+  Runs ecto migrations.
   """
-  use Mix.Task
   require Application
 
   def run(_) do
