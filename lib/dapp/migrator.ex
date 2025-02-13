@@ -4,7 +4,7 @@ defmodule Dapp.Migrator do
   """
   require Application
 
-  def run(_) do
+  def run do
     {:ok, _} = Application.ensure_all_started(:dapp)
     path = Application.app_dir(:dapp, "priv/repo/migrations")
     Ecto.Migrator.run(Dapp.Repo, path, :up, all: true)
