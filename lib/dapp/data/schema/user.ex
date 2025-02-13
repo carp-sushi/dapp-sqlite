@@ -2,8 +2,9 @@ defmodule Dapp.Data.Schema.User do
   @moduledoc """
   Schema data mapper for the users table.
   """
-  import Ecto.Changeset
   use Ecto.Schema
+  import Ecto.Changeset
+  import EctoCommons.EmailValidator
 
   alias Dapp.Data.Schema.Role
   alias Dapp.Dto
@@ -25,7 +26,7 @@ defmodule Dapp.Data.Schema.User do
     struct
     |> cast(params, [:blockchain_address, :email, :name, :role_id])
     |> validate_required([:blockchain_address, :email, :role_id])
-    |> validate_length(:email, min: 3, max: 255)
+    |> validate_email(:email)
     |> validate_length(:name, max: 255)
     |> unique_constraint(:blockchain_address)
     |> unique_constraint(:email)

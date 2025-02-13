@@ -2,8 +2,9 @@ defmodule Dapp.Data.Schema.Invite do
   @moduledoc """
   Schema data mapper for the invites table.
   """
-  import Ecto.Changeset
   use Ecto.Schema
+  import Ecto.Changeset
+  import EctoCommons.EmailValidator
 
   alias Dapp.Data.Schema.{Role, User}
   alias Dapp.Dto
@@ -25,7 +26,7 @@ defmodule Dapp.Data.Schema.Invite do
     struct
     |> cast(params, [:email, :role_id, :user_id, :consumed_at])
     |> validate_required([:email, :role_id, :user_id])
-    |> validate_length(:email, min: 3, max: 255)
+    |> validate_email(:email)
     |> foreign_key_constraint(:user_id)
     |> foreign_key_constraint(:role_id)
     |> unique_constraint(:email)

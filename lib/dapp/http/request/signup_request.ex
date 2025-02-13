@@ -6,6 +6,7 @@ defmodule Dapp.Http.Request.SignupRequest do
 
   alias Ecto.Changeset
   import Ecto.Changeset
+  import EctoCommons.EmailValidator
 
   @doc """
   Gather and validate use case args for user signup.
@@ -21,7 +22,7 @@ defmodule Dapp.Http.Request.SignupRequest do
       |> validate_required([:invite_code, :email])
       |> validate_length(:invite_code, is: Nanoid.Configuration.default_size())
       |> validate_length(:name, max: 255)
-      |> validate_length(:email, min: 3, max: 255)
+      |> validate_email(:email)
 
     case changeset.valid? do
       true -> {:ok, Changeset.apply_changes(changeset)}
