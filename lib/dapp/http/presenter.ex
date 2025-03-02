@@ -6,14 +6,14 @@ defmodule Dapp.Http.Presenter do
   @doc """
   Sends a use case result as a http json response.
   """
-  def reply({:error, error}, conn), do: Response.send_json(conn, %{error: error}, 400)
-
   def reply({:ok, dto}, conn) do
     case conn.method do
       "POST" -> Response.send_json(conn, dto, 201)
       _ -> Response.send_json(conn, dto)
     end
   end
+
+  def reply({:error, error}, conn), do: Response.send_json(conn, %{error: error}, 400)
 
   @doc """
   Something went wrong executing a use case.

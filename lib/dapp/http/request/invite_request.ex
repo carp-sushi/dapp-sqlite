@@ -21,9 +21,10 @@ defmodule Dapp.Http.Request.InviteRequest do
       |> validate_email(:email)
       |> validate_number(:role_id, greater_than: 0)
 
-    case changeset.valid? do
-      true -> {:ok, Changeset.apply_changes(changeset)}
-      false -> Error.new(changeset, "invalid invite request")
+    if changeset.valid? do
+      {:ok, Changeset.apply_changes(changeset)}
+    else
+      Error.new(changeset, "invalid invite request")
     end
   end
 end

@@ -24,9 +24,10 @@ defmodule Dapp.Http.Request.SignupRequest do
       |> validate_length(:name, max: 255)
       |> validate_email(:email)
 
-    case changeset.valid? do
-      true -> {:ok, Changeset.apply_changes(changeset)}
-      false -> Error.new(changeset, "invalid signup request")
+    if changeset.valid? do
+      {:ok, Changeset.apply_changes(changeset)}
+    else
+      Error.new(changeset, "invalid signup request")
     end
   end
 end
