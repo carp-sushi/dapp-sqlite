@@ -2,9 +2,10 @@ defmodule Dapp.Util.Validate do
   @moduledoc """
   Validation helpers.
   """
+  import Ecto.Changeset
+
   alias Dapp.Error
   alias Ecto.Changeset
-  import Ecto.Changeset
 
   @doc "Validate a blockhain address in a parameter map."
   def blockchain_address_params(params) do

@@ -1,6 +1,7 @@
 defmodule Dapp.Http.Router.RoleTest do
   use ExUnit.Case, async: true
   use Plug.Test
+
   import Hammox
 
   # Modules under test
@@ -16,14 +17,14 @@ defmodule Dapp.Http.Router.RoleTest do
     test "allows admins to list roles" do
       RoleUtil.mock_list_roles(:rand.uniform(5))
       admin = UserUtil.mock_http_admin()
-      req = conn(:get, "/") |> put_req_header(@auth_header, admin.blockchain_address)
+      req = :get |> conn("/") |> put_req_header(@auth_header, admin.blockchain_address)
       res = RoleRouter.call(req, [])
       assert res.status == 200
     end
 
     test "prevents users from listing roles" do
       user = UserUtil.mock_http_user()
-      req = conn(:get, "/") |> put_req_header(@auth_header, user.blockchain_address)
+      req = :get |> conn("/") |> put_req_header(@auth_header, user.blockchain_address)
       res = RoleRouter.call(req, [])
       assert res.status == 401
     end
@@ -32,7 +33,7 @@ defmodule Dapp.Http.Router.RoleTest do
   describe "GET /nonesuch" do
     test "returns a 404 for a non-mapped route" do
       admin = UserUtil.mock_http_admin()
-      req = conn(:get, "/nonesuch") |> put_req_header(@auth_header, admin.blockchain_address)
+      req = :get |> conn("/nonesuch") |> put_req_header(@auth_header, admin.blockchain_address)
       res = RoleRouter.call(req, [])
       assert res.status == 404
     end

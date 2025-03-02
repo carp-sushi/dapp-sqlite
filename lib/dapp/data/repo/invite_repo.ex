@@ -4,12 +4,14 @@ defmodule Dapp.Data.Repo.InviteRepo do
   """
   @behaviour Dapp.Data.Spec.InviteRepoSpec
 
-  alias Dapp.{Error, Repo}
-  alias Dapp.Data.Schema.{Invite, User}
-  alias Dapp.Util.Clock
-
-  alias Ecto.Multi
   import Ecto.Query
+
+  alias Dapp.Data.Schema.Invite
+  alias Dapp.Data.Schema.User
+  alias Dapp.Error
+  alias Dapp.Repo
+  alias Dapp.Util.Clock
+  alias Ecto.Multi
 
   @doc """
   Create an invite.
@@ -28,12 +30,11 @@ defmodule Dapp.Data.Repo.InviteRepo do
   Look up an invite using id and email address.
   """
   def lookup(id, email) do
-    Repo.one(
-      from(i in Invite,
-        where: i.id == ^id and i.email == ^email and is_nil(i.consumed_at),
-        select: i
-      )
+    from(i in Invite,
+      where: i.id == ^id and i.email == ^email and is_nil(i.consumed_at),
+      select: i
     )
+    |> Repo.one()
     |> case do
       nil -> Error.new("invite does not exist or has already been consumed")
       invite -> {:ok, invite}
@@ -45,7 +46,7 @@ defmodule Dapp.Data.Repo.InviteRepo do
   """
   def signup(params, invite) do
     user_params = Map.put(params, :role_id, invite.role_id)
-    user_changeset = %User{id: Nanoid.generate()} |> User.changeset(user_params)
+    user_changeset = User.changeset(%User{id: Nanoid.generate()}, user_params)
     invite_changeset = Invite.changeset(invite, %{consumed_at: Clock.now()})
 
     Multi.new()

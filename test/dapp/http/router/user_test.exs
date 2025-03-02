@@ -1,6 +1,7 @@
 defmodule Dapp.Http.Router.UserTest do
   use ExUnit.Case, async: true
   use Plug.Test
+
   import Hammox
 
   # Modules under test
@@ -16,14 +17,14 @@ defmodule Dapp.Http.Router.UserTest do
     test "allows admins to list recent users" do
       UserUtil.mock_list_users(2)
       admin = UserUtil.mock_http_admin()
-      req = conn(:get, "/recent") |> put_req_header(@auth_header, admin.blockchain_address)
+      req = :get |> conn("/recent") |> put_req_header(@auth_header, admin.blockchain_address)
       res = UserRouter.call(req, [])
       assert res.status == 200
     end
 
     test "prevents users from listing recent users" do
       user = UserUtil.mock_http_user()
-      req = conn(:get, "/recent") |> put_req_header(@auth_header, user.blockchain_address)
+      req = :get |> conn("/recent") |> put_req_header(@auth_header, user.blockchain_address)
       res = UserRouter.call(req, [])
       assert res.status == 401
     end
@@ -32,7 +33,7 @@ defmodule Dapp.Http.Router.UserTest do
   describe "GET /users/profile" do
     test "returns the profile for an authorized user" do
       user = UserUtil.mock_http_user()
-      req = conn(:get, "/profile") |> put_req_header(@auth_header, user.blockchain_address)
+      req = :get |> conn("/profile") |> put_req_header(@auth_header, user.blockchain_address)
       res = UserRouter.call(req, [])
       assert res.status == 200
     end
@@ -41,7 +42,7 @@ defmodule Dapp.Http.Router.UserTest do
   describe "GET /nonesuch" do
     test "returns a 404" do
       user = UserUtil.mock_http_user()
-      req = conn(:get, "/nonesuch") |> put_req_header(@auth_header, user.blockchain_address)
+      req = :get |> conn("/nonesuch") |> put_req_header(@auth_header, user.blockchain_address)
       res = UserRouter.call(req, [])
       assert res.status == 404
     end

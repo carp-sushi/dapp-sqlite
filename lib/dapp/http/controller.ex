@@ -3,6 +3,7 @@ defmodule Dapp.Http.Controller do
   HTTP request handler.
   """
   alias Dapp.Http.Presenter
+
   require Logger
 
   @doc "Execute a use case and send the result as json."

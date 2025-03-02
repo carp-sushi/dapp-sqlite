@@ -2,9 +2,10 @@ defmodule Dapp.UseCase.Invite.CreateInvite do
   @moduledoc """
   Use case for creating a user invites.
   """
-  alias Dapp.Dto
   use Dapp.Data.Keeper
   use Dapp.UseCase
+
+  alias Dapp.Dto
 
   @impl true
   def execute(args) do
@@ -19,7 +20,7 @@ defmodule Dapp.UseCase.Invite.CreateInvite do
     %{email: args.email, user_id: args.user.id, role_id: args.role_id}
     |> invite_repo().create()
     |> case do
-      {:ok, invite} -> %{invite: Dto.from_schema(invite)} |> success()
+      {:ok, invite} -> success(%{invite: Dto.from_schema(invite)})
       error -> error
     end
   end

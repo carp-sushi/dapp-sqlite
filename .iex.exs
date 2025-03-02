@@ -5,10 +5,16 @@
 import Enum, only: [map: 2, reduce: 3, filter: 2]
 import String, only: [upcase: 1, downcase: 1]
 
+alias Dapp.Data.Repo.InviteRepo
+alias Dapp.Data.Repo.RoleRepo
+alias Dapp.Data.Repo.UserRepo
+alias Dapp.Data.Schema.Grant
+alias Dapp.Data.Schema.Invite
+alias Dapp.Data.Schema.Role
+alias Dapp.Data.Schema.User
+
 # Project imports for ad-hoc testing
 alias Dapp.Repo
-alias Dapp.Data.Repo.{InviteRepo, RoleRepo, UserRepo}
-alias Dapp.Data.Schema.{Grant, Invite, Role, User}
 
 # Test accounts
 alice = "tp18vd8fpwxzck93qlwghaj6arh4p7c5n89x8kska"

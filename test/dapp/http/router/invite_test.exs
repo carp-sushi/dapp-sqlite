@@ -1,6 +1,7 @@
 defmodule Dapp.Http.Router.InviteTest do
   use ExUnit.Case, async: true
   use Plug.Test
+
   import Hammox
 
   # Modules under test
@@ -17,14 +18,14 @@ defmodule Dapp.Http.Router.InviteTest do
       InviteUtil.mock_create_invite()
       admin = UserUtil.mock_http_admin()
       body = %{email: FakeData.generate_email_addresss(), role_id: FakeData.generate_role().id}
-      req = conn(:post, "/", body) |> put_req_header(@auth_header, admin.blockchain_address)
+      req = :post |> conn("/", body) |> put_req_header(@auth_header, admin.blockchain_address)
       res = InviteRouter.call(req, [])
       assert res.status == 201
     end
 
     test "should fail when no data is passed in the request body" do
       admin = UserUtil.mock_http_admin()
-      req = conn(:post, "/") |> put_req_header(@auth_header, admin.blockchain_address)
+      req = :post |> conn("/") |> put_req_header(@auth_header, admin.blockchain_address)
       res = InviteRouter.call(req, [])
       assert res.status == 400
     end
@@ -33,7 +34,7 @@ defmodule Dapp.Http.Router.InviteTest do
   describe "GET /nonesuch" do
     test "returns a 404" do
       admin = UserUtil.mock_http_admin()
-      req = conn(:get, "/nonesuch") |> put_req_header(@auth_header, admin.blockchain_address)
+      req = :get |> conn("/nonesuch") |> put_req_header(@auth_header, admin.blockchain_address)
       res = InviteRouter.call(req, [])
       assert res.status == 404
     end

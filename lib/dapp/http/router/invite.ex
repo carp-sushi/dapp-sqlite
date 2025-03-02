@@ -4,8 +4,12 @@ defmodule Dapp.Http.Router.Invite do
   """
   use Plug.Router
 
-  alias Dapp.Http.{Controller, Request.InviteRequest, Response}
-  alias Dapp.Rbac.{Access, Auth, Header}
+  alias Dapp.Http.Controller
+  alias Dapp.Http.Request.InviteRequest
+  alias Dapp.Http.Response
+  alias Dapp.Rbac.Access
+  alias Dapp.Rbac.Auth
+  alias Dapp.Rbac.Header
   alias Dapp.UseCase.Invite.CreateInvite
 
   plug(:match)

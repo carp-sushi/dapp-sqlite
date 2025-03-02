@@ -2,9 +2,10 @@ defmodule Dapp.UseCase.Invite.Signup do
   @moduledoc """
   Add new users with valid invites.
   """
-  alias Dapp.Dto
   use Dapp.Data.Keeper
   use Dapp.UseCase
+
+  alias Dapp.Dto
 
   @impl true
   def execute(args) do
@@ -25,7 +26,7 @@ defmodule Dapp.UseCase.Invite.Signup do
   # Create a new user for an invite.
   defp signup(args, invite) do
     case invite_repo().signup(args, invite) do
-      {:ok, user} -> %{profile: Dto.from_schema(user)} |> success()
+      {:ok, user} -> success(%{profile: Dto.from_schema(user)})
       error -> error
     end
   end

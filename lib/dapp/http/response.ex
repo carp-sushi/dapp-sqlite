@@ -13,8 +13,7 @@ defmodule Dapp.Http.Response do
   @doc """
   Send a bad request response.
   """
-  def bad_request(conn, error),
-    do: conn |> send_json(%{error: error}, 400)
+  def bad_request(conn, error), do: send_json(conn, %{error: error}, 400)
 
   @doc """
   Send a not found response.
@@ -22,7 +21,7 @@ defmodule Dapp.Http.Response do
   def not_found(conn) do
     conn
     |> send_json(%{error: %{message: "route not found"}}, 404)
-    |> halt
+    |> halt()
   end
 
   @doc """
@@ -31,7 +30,7 @@ defmodule Dapp.Http.Response do
   def unauthorized(conn) do
     conn
     |> send_json(%{error: %{message: "unauthorized"}}, 401)
-    |> halt
+    |> halt()
   end
 
   @doc """

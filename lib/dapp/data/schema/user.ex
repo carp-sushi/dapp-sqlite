@@ -3,6 +3,7 @@ defmodule Dapp.Data.Schema.User do
   Schema data mapper for the users table.
   """
   use Ecto.Schema
+
   import Ecto.Changeset
   import EctoCommons.EmailValidator
 
@@ -37,11 +38,6 @@ defmodule Dapp.Data.Schema.User do
   # Map a user schema struct to a data transfer object.
   defimpl Dto, for: __MODULE__ do
     def from_schema(struct),
-      do: %{
-        id: struct.id,
-        blockchain_address: struct.blockchain_address,
-        name: struct.name,
-        email: struct.email
-      }
+      do: %{id: struct.id, blockchain_address: struct.blockchain_address, name: struct.name, email: struct.email}
   end
 end

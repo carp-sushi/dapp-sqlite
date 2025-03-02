@@ -6,8 +6,10 @@ defmodule Dapp.UseCase do
 
   defmacro __using__(_) do
     quote location: :keep do
-      alias Dapp.{Error, UseCase}
-      @behaviour UseCase
+      @behaviour Dapp.UseCase
+
+      alias Dapp.Error
+      alias Dapp.UseCase
 
       @doc false
       def success(dto), do: {:ok, dto}
@@ -15,8 +17,7 @@ defmodule Dapp.UseCase do
       @doc false
       def fail(message), do: Error.new(message)
 
-      def validate(args, _keys) when is_nil(args),
-        do: fail("use case args must not be nil")
+      def validate(args, _keys) when is_nil(args), do: fail("use case args must not be nil")
 
       @doc "Ensure use case args contain all required keys."
       def validate(args, keys) do
