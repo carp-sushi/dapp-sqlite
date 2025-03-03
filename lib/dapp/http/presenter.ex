@@ -9,6 +9,7 @@ defmodule Dapp.Http.Presenter do
   def reply({:ok, dto}, conn) do
     case conn.method do
       "POST" -> Response.send_json(conn, dto, 201)
+      "DELETE" -> Response.no_content(conn)
       _ -> Response.send_json(conn, dto)
     end
   end

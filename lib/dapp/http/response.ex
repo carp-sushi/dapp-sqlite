@@ -34,6 +34,11 @@ defmodule Dapp.Http.Response do
   end
 
   @doc """
+  Send a no content response.
+  """
+  def no_content(conn), do: send_resp(conn, 204, "")
+
+  @doc """
   Encode data as JSON and send in a HTTP response with a status.
   """
   def send_json(conn, data, status \\ 200) do
