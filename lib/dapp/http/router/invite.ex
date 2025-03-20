@@ -5,7 +5,7 @@ defmodule Dapp.Http.Router.Invite do
   use Plug.Router
 
   alias Dapp.Http.Controller
-  alias Dapp.Http.Request.InviteRequest
+  alias Dapp.Http.Request.CreateInviteRequest
   alias Dapp.Http.Response
   alias Dapp.Rbac.Access
   alias Dapp.Rbac.Auth
@@ -21,7 +21,7 @@ defmodule Dapp.Http.Router.Invite do
 
   # Admins can create invites.
   post "/" do
-    case InviteRequest.validate(conn) do
+    case CreateInviteRequest.validate(conn) do
       {:ok, args} -> Controller.execute(conn, CreateInvite, args)
       {:error, error} -> Response.bad_request(conn, error)
     end

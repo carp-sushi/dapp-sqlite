@@ -1,4 +1,4 @@
-defmodule Dapp.Http.Request.InviteRequest do
+defmodule Dapp.Http.Request.CreateInviteRequest do
   @moduledoc """
   Validate requests to create invites.
   """
