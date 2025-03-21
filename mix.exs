@@ -39,11 +39,11 @@ defmodule Dapp.MixProject do
     [
       {:ecto_commons, "~> 0.3.4"},
       {:ecto_identifier, "~> 0.2.0"},
-      {:ecto_sqlite3, "~> 0.18"},
+      {:ecto_sqlite3, "~> 0.19"},
       {:jason, "~> 1.4"},
-      {:plug_cowboy, "~> 2.7.2"},
+      {:plug_cowboy, "~> 2.7.3"},
       {:hammox, "~> 0.7", only: :test},
-      {:styler, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:styler, "~> 1.4.1", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7.11", only: [:dev, :test], runtime: false}
     ]
   end

@@ -1,8 +1,9 @@
 defmodule Dapp.Http.Router.InviteTest do
   use ExUnit.Case, async: true
-  use Plug.Test
 
   import Hammox
+  import Plug.Conn
+  import Plug.Test
 
   # Modules under test
   alias Dapp.Http.Router.Invite, as: InviteRouter
