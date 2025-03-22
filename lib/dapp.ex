@@ -9,7 +9,7 @@ defmodule Dapp do
   @impl true
   def start(_type, _args) do
     Logger.info("Running on port #{@port}")
-    children = [Dapp.Repo, {Plug.Cowboy, scheme: :http, plug: Dapp.Plug, options: [port: @port]}]
+    children = [Dapp.Repo, {Bandit, plug: Dapp.Plug, port: @port}]
     Supervisor.start_link(children, strategy: :one_for_one, name: Dapp.Supervisor)
   end
 end
